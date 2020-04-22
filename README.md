@@ -1,5 +1,7 @@
 # Project Airwaves
 
+**Current Version: V0.1.0** - [Change log](CHANGELOG.md)
+
 Project airwaves is a simple, currently single direction, number sorting game with the original development dating back to 2018. As mentioned, the game currently only supports a single objective of sorting an array of numbers into ascending order.
 
 ## How it works
