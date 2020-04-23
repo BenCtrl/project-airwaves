@@ -7,7 +7,7 @@ public class NumberArray {
     Random random = new Random();
     ArrayList<Integer> numberArray = new ArrayList<Integer>();
     
-    public void generateNumberList(int count, int range) {
+    public void generateNumberList(int count, int range) throws IllegalArgumentException {
         if (range < count) {
             throw new IllegalArgumentException("Range cannot be lower than number count!");
         }

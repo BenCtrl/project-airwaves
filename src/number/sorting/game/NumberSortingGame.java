@@ -37,22 +37,21 @@ public class NumberSortingGame {
             
             System.out.println("GAME COMPLETE!!!!");
         } catch(IllegalArgumentException e) {
-            System.out.println("Something went tits up!");
+            System.out.println("ERROR | " + e.getMessage());
         }
     }
     
     public void shuffleNumberList(int selectedNumber, int newLocation) {
-        // Gather data from player input
+        // Process indexes of desired numbers in list
         int selectedNumberIndex = this.indexOf(numbers, selectedNumber);
         int newLocationIndex = newLocation - 1;
         
         if (selectedNumberIndex == -1) {
             System.out.println("ERROR | Could not find index for number '" + selectedNumber + "'");
-        } else if (newLocationIndex == -1) {
-            System.out.println("ERROR | Could not find index for new location");
-        }
-        
-        if (selectedNumberIndex > newLocationIndex) {
+        } else if (newLocation < 0 || newLocation >= numbers.length) { 
+            System.out.println("ERROR | Invalid location");
+        } else {
+            if (selectedNumberIndex > newLocationIndex) {
             // Shuffle DOWN
             int pointer = 0;    //Used to point at the selectedNumber
             int j = 0;  //Used to increment the pointer backwards to count DOWN the array.
@@ -65,71 +64,47 @@ public class NumberSortingGame {
                 numbers[pointer] = temp;
                 j++;
             }
-        } else {
-            // Shuffle UP
-            for(int i=selectedNumberIndex; i <= newLocationIndex - 1; i++) {
-                int temp = numbers[i + 1];
-                numbers[i + 1] = selectedNumber;
-                numbers[i] = temp;
+            } else {
+                // Shuffle UP
+                for(int i=selectedNumberIndex; i <= newLocationIndex - 1; i++) {
+                    int temp = numbers[i + 1];
+                    numbers[i + 1] = selectedNumber;
+                    numbers[i] = temp;
+                }
             }
-        }
         
-        // Shuffle Number List
-        System.out.println("\n \n \n \n \n \n \n \n \n \n \n");
-        for (int number: this.numbers) {
-            System.out.print(number+", ");
+            // Shuffle Number List
+            System.out.println("\n \n \n \n \n \n \n \n \n \n \n");
+            for (int number: this.numbers) {
+                System.out.print(number+", ");
+            }
+            System.out.println("");
         }
-        System.out.println("");
     }
 
-    boolean numbersSorted(int[] numberArray) {
+    // Validates number array is in correct ascending order
+    private boolean numbersSorted(int[] numberArray) {
         int arrayLength = numberArray.length;
         
         for (int i = 0; i < arrayLength; i++) {
             if ( i + 1 != arrayLength && numberArray[i] > numberArray[i + 1]) {
                 return false;
-            } else {
-                // Resume checking
             }
         }
-
         return true;
     }
-
-    public int[] shuffle(int[] numberArray, int lowestIndex, int highestIndex, int selectedNumber) {
-        for (int i = lowestIndex ; i < highestIndex ; i++) {
-            int temp = numberArray[i + 1];
-            numberArray[i + 1] = selectedNumber;
-            numberArray[i] = temp;
-        }
-        return numberArray;
-    }
     
+    // Reverse the values for an array
     public int[] reverseArray(int[] array) {
         for(int i=0; i < (array.length/2); i++) {
-            int temp = 0;
-            if (i != (array.length - 1)) {
-                temp = array[array.length-(i+1)];
-                array[array.length-(i+1)] = array[i];
-                array[i] = temp;
-            } else {
-               // 
-            }
+            int temp = array[array.length-(i+1)];
+            array[array.length-(i+1)] = array[i];
+            array[i] = temp;
         }
         return array;
     }
     
-    public int findNumberIndex(int[] numberArray, int target) {
-        int targetIndex = 0;
-        for (int i = 0 ; i < numberArray.length ; i++){
-            if (numberArray[i] == target) {
-                targetIndex = i;
-                i = numberArray.length;
-            }
-        }
-        return targetIndex;
-    }
-    
+    // Returns the index of the provided expected number in a given array
     public int indexOf(int[] numberList, int givenNumber) {
         for (int i=0 ; i < numberList.length ; i++) {
             if(numberList[i] == givenNumber) {
@@ -139,6 +114,7 @@ public class NumberSortingGame {
         return -1;
     }
     
+    // Prints the formatted number list to the console
     private void printNumberList() {
         for (int number : this.numbers) {
             System.out.print(number + ", ");
